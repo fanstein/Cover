@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EveryDay</title>
+</head>
+<body>
+<h1 align="center">{{ text }}</h1>
+<div id="container" style="width:500px">
+<div id="content">
+    <h4 align="center">功能任务:</h4>
+    <table width="80%" border="2" cellspacing="0" cellpadding="4" bgcolor="#cccccc" align="left">
+        <tr>
+            <td>项目名</td>
+            <td>影响app</td>
+        </tr>
+        {% for key,value in data.items %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value.affect_app }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+<div id="footer">
+    <ul>
+        {% for key,value in data.items %}
+            <li>
+                项目名:{{ key }} ,影响服务:{{ value.affect_app }}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+</div>
+</body>
+</html>

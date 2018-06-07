@@ -5,4 +5,4 @@ from django.apps import AppConfig
 
 
 class EverydayConfig(AppConfig):
-    name = 'EveryDay'
+    name = 'dailywork'

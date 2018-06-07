@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'dailywork',
+    'django_cas',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +49,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django_cas.middleware.CASMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'django_cas.backends.CASBackend',
+)
 
 ROOT_URLCONF = 'HelloTester.urls'
 
@@ -80,7 +88,7 @@ DATABASES = {
     },
     'default':{
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'didle',
+        'NAME': 'testplatformdb',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -127,4 +135,32 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        ,
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
+
+
+# login logout
+LOGIN_URL = "/login/"
+LOGINOUT_URL = "/logout/"
+
+CAS_SERVER_URL = "https://cas.uat.qa.nt.ctripcorp.com/caso/login"
+CAS_LOGOUT_COMPLETELY = True
+CAS_IGNORE_REFERER = True
+CAS_REDIRECT_URL = "/"
+CAS_AUTO_CREATE_USERS = True
+CAS_GATEWAY = False
+CAS_RETRY_LOGIN = False
