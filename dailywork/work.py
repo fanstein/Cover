@@ -1,6 +1,7 @@
 # coding: utf8
 import requests
 import sys, os
+from common import *
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -38,12 +39,13 @@ def tds_req():
         affect_app = each['affectAPP']
         affect_api = each['affectAPPAPI']
         submitter = each['submitter']
-        submitDate = each['submitDate']
-        releaseETA = each['releaseETA']
-        data[project_name] = {'type': type, 'project_code':project_code, 'affect_app':affect_app,
-                              'affect_api':affect_api, 'submitter':submitter, 'submitDate':submitDate,
-                              'releaseETA':releaseETA}
+        submitDate = timestamp2date(each['submitDate'], False)
+        releaseETA = timestamp2date(each['releaseETA'], False)
+        data[project_name] = {'type': type, 'project_code': project_code, 'affect_app': affect_app,
+                              'affect_api': affect_api, 'submitter': submitter, 'submitDate': submitDate,
+                              'releaseETA': releaseETA}
     return {'message': 'success', 'data': data}
+
 
 if __name__ == '__main__':
     print tds_req()

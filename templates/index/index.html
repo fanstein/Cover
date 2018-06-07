@@ -3,33 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>EveryDay</title>
+    <style>
+        #container{width: 1300px;
+                display: flex;
+                min-height: 100vh; /*1vh表示浏览器高度的1%，100vh为浏览器高度，感觉这个挺好的*/
+                flex-direction: column;/*灵活的项垂直显示*/}
+        #content{flex: 1;}
+        #footer{height: 100px;
+            background-color: white;}
+    </style>
 </head>
 <body>
-<h1 align="center">{{ text }}</h1>
-<div id="container" style="width:500px">
-<div id="content">
-    <h4 align="center">功能任务:</h4>
-    <table width="80%" border="2" cellspacing="0" cellpadding="4" bgcolor="#cccccc" align="left">
+
+<div id="container" style="width:100%">
+<div>
+    <h1 align="center" style="margin-bottom:0">{{ text }}</h1>
+</div>
+
+
+<div id="content" style="width: 100%">
+    <h4 align="left">功能任务:</h4>
+    <table width="80%" border="2" cellspacing="0" cellpadding="4" bgcolor="white" align="left">
         <tr>
             <td>项目名</td>
             <td>影响app</td>
+            <td>分支明细</td>
+            <td>开发</td>
+            <td>提测日期</td>
+            <td>发布日期</td>
         </tr>
         {% for key,value in data.items %}
             <tr>
-                <td>{{ key }}</td>
+                {% if value.type == '项目' %}
+                    <td>{{ key }}:{{ value.project_code }}</td>
+                {% else %}
+                    <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.project_code }}" target="_blank">{{ key }}</a></td>
+                {% endif %}
                 <td>{{ value.affect_app }}</td>
+                <td>
+                    {% for key1,value1 in value.affect_api.items %}
+                        {{ key1 }}:{{ value1.branch }}
+                    {% endfor %}
+                </td>
+                <td>{{ value.submitter }}</td>
+                <td>{{ value.submitDate }}</td>
+                <td>{{ value.releaseETA }}</td>
             </tr>
         {% endfor %}
     </table>
 </div>
-<div id="footer">
-    <ul>
-        {% for key,value in data.items %}
-            <li>
-                项目名:{{ key }} ,影响服务:{{ value.affect_app }}
-            </li>
-        {% endfor %}
-    </ul>
+<div id="footer" style="clear:both;text-align:center;float:bottom">
+版权 © tester.com</div>
 </div>
 </div>
 </body>

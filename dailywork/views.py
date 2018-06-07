@@ -9,4 +9,8 @@ from work import *
 @login_required()
 def index(request):
     data = tds_req()
-    return render_to_response('index/index.html', {'text': 'wwooo!!!', 'data': data['data']})
+    if data['message'] == 'error':
+        print 'response error!!!'
+        return render_to_response('index/index.html', {'text': 'wwooo!!! error'})
+    else:
+        return render_to_response('index/index.html', {'text': 'wwooo!!!', 'data': data['data']})

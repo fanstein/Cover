@@ -24,8 +24,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', login),
     url(r'^logout/$', logout),
-    url(r'^index/', index),
-    # url(r'^dailywork/', index),
+    url(r'^logout/$', logout),
     url(r'^dailywork/', include('dailywork.urls')),
     url(r'^$', RedirectView.as_view(url='dailywork')),
 ]
