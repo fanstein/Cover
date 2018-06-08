@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block mainbody %}
+    <ul>
+        {% for each in object_list %}
+            <li>{{ each.app_id }}-{{ each.name }}</li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
