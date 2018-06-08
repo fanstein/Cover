@@ -8,7 +8,7 @@ from django.views import generic
 # Create your views here.
 
 
-@login_required()
+# @login_required()
 def index(request):
     data = tds_req()
     if data['message'] == 'error':
@@ -20,9 +20,10 @@ def index(request):
 
 class ServerListView(generic.ListView):
     model = CatServerInfo
-    template_name = 'test.html'
+    template_name = 'test_list.html'
 
 
 class ServerDetailView(generic.DetailView):
     model = CatServerInfo
     template_name = 'test_detail.html'
+    # pk_url_kwarg = 'id'

@@ -1,3 +1,4 @@
+# coding=utf-8
 """
 Django settings for HelloTester project.
 
@@ -135,6 +136,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 当运行 python manage.py collectstatic 的时候
+# 以前放在app下static中的静态文件全部拷贝到 settings.py 中设置的 STATIC_ROOT 文件夹中
+# STATIC_ROOT 文件夹 是用来将所有STATICFILES_DIRS中所有文件夹中的文件，以及各app中static中的文件都复制过来
+# 把这些文件放到一起是为了用apache等部署的时候更方便
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
 # login logout
 LOGIN_URL = "/login/"
@@ -147,3 +153,11 @@ CAS_REDIRECT_URL = "/"
 CAS_AUTO_CREATE_USERS = True
 CAS_GATEWAY = False
 CAS_RETRY_LOGIN = False
+
+
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.qq.com'  # 如果是 163 改成 smtp.163.com
+EMAIL_PORT = 465
+EMAIL_HOST_USER = '935766346@qq.com' # 帐号
+EMAIL_HOST_PASSWORD = 'p@ssw0rd'  # 密码
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

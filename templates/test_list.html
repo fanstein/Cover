@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
 {% block mainbody %}
+    <p>test_list</p>
     <ul>
         {% for each in object_list %}
-            <li>{{ each.app_id }}-{{ each.name }}</li>
+            <li><a href="{% url 'detail' each.id %}">{{ each.id }}</a> -{{ each.app_id }}</li>
         {% endfor %}
     </ul>
-
 {% endblock %}

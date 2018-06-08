@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block mainbody %}
+    <p>test_detail</p>
     <ul>
-        {% for each in object_list %}
-            <li><a href="{% url 'detail' each.id %}"></a> -{{ each.name }}</li>
-        {% endfor %}
+        {{ object.id }}:{{ object.app_id }}
     </ul>
+
 {% endblock %}
