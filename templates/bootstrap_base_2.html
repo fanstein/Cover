@@ -12,19 +12,12 @@
     <title>{% block mytitle %}Starter Template for Bootstrap{% endblock %}</title>
     <!-- Bootstrap core CSS -->
     <link href="" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="{% static 'css/ie10-viewport-bug-workaround.css' %}" rel="stylesheet"/>
-
-    <!-- Custom styles for this template -->
+{% block selfcss %}
     <link href="{% static 'css/starter-template.css' %}" rel="stylesheet"/>
+{% endblock %}
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="{% static 'js/ie-emulation-modes-warning.js' %}"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+     <script src="{% static 'js/ie-emulation-modes-warning.js' %}"></script>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
@@ -32,6 +25,7 @@
 
 <body>
 {#  导航栏#}
+{% block bar %}
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
@@ -53,8 +47,9 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+{% endblock %}
 
-
+{% block body %}
 <div class="container">
 
     <div class="starter-template">
@@ -65,14 +60,14 @@
         {% endblock %}
     </div>
 </div><!-- /.container -->
-
-
+{% endblock %}
+{% block footer %}
 <footer class="footer">
     <div class="container">
         <p class="text-muted">版权 © HelloTester.com.</p>
     </div>
 </footer>
-
+{% endblock %}
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
