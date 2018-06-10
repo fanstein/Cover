@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response,render
 from work import *
+from django.http import HttpResponse
 from models import *
 from django.views import generic
+# 引入我们创建的表单类
+from .forms import Form1
 # Create your views here.
 
 
@@ -27,3 +30,17 @@ class ServerDetailView(generic.DetailView):
     model = CatServerInfo
     template_name = 'test_detail.html'
     # pk_url_kwarg = 'id'
+
+
+def perf(request):
+    if request.method == "POST":
+        f = Form1(request.POST)
+        if f.is_valid():
+            print(f.cleaned_data)
+        else:
+            return render(request, "perf.html", {"error": f.errors, "form": f})
+    else:
+        # 如果不是post提交数据，就不传参数创建对象，并将对象返回给前台，直接生成input标签，内容为空
+        f = Form1()
+        return render(request, "perf.html", {"form": f})
+    return render(request, "perf.html",{"form": f})

@@ -142,6 +142,13 @@ STATIC_URL = '/static/'
 # 把这些文件放到一起是为了用apache等部署的时候更方便
 STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static')
 
+# 其它 存放静态文件的文件夹，可以用来存放项目中公用的静态文件，里面不能包含 STATIC_ROOT
+# 如果不想用 STATICFILES_DIRS 可以不用，都放在 app 里的 static 中也可以
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "common_static"),
+    # '/path/to/others/static/',  # 用不到的时候可以不写这一行
+)
+
 # login logout
 LOGIN_URL = "/login/"
 LOGINOUT_URL = "/logout/"
@@ -159,5 +166,5 @@ EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.qq.com'  # 如果是 163 改成 smtp.163.com
 EMAIL_PORT = 465
 EMAIL_HOST_USER = '935766346@qq.com' # 帐号
-EMAIL_HOST_PASSWORD = 'p@ssw0rd'  # 密码
+EMAIL_HOST_PASSWORD = 'bilgqpuossehbehb'  # 密码
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
