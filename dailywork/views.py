@@ -7,18 +7,18 @@ from django.http import HttpResponse
 from models import *
 from django.views import generic
 # 引入我们创建的表单类
-from .forms import Form1
+from .forms import Form1,Jmeter_F
 # Create your views here.
 
 
 # @login_required()
-def index(request):
+def daily(request):
     data = tds_req()
     if data['message'] == 'error':
         print 'response error!!!'
-        return render_to_response('index.html', {'text': 'wwooo!!! error'})
+        return render_to_response('daily_work.html', {'text': 'wwooo!!! error'})
     else:
-        return render_to_response('index.html', {'text': 'wwooo!!!', 'data': data['data']})
+        return render_to_response('daily_work.html', {'text': 'wwooo!!!', 'data': data['data']})
 
 
 class ServerListView(generic.ListView):
@@ -34,13 +34,13 @@ class ServerDetailView(generic.DetailView):
 
 def perf(request):
     if request.method == "POST":
-        f = Form1(request.POST)
+        f = Jmeter_F(request.POST)
         if f.is_valid():
             print(f.cleaned_data)
         else:
             return render(request, "perf.html", {"error": f.errors, "form": f})
     else:
         # 如果不是post提交数据，就不传参数创建对象，并将对象返回给前台，直接生成input标签，内容为空
-        f = Form1()
+        f = Jmeter_F()
         return render(request, "perf.html", {"form": f})
     return render(request, "perf.html",{"form": f})

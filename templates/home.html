@@ -1,4 +1,4 @@
-{% extends 'bootstrap_base_2.html' %}
+{% extends 'bootstrap_base.html' %}
 {% load static %}
 {% block selfcss %}
   <link href="{% static 'css/cover.css' %}" rel="stylesheet">
@@ -30,7 +30,8 @@
             <h1 class="cover-heading">Cover your page.</h1>
             <p class="lead">Cover is a one-page template for building simple and beautiful home pages. Download, edit the text, and add your own fullscreen background photo to make it your own.</p>
             <p class="lead">
-              <a href="{% url 'perf' %}" class="btn btn-lg btn-default">Tester Go</a>
+              <a href="{% url 'perf' %}" class="btn btn-lg btn-default">Perf Go</a>
+              <a href="{% url 'daily' %}" class="btn btn-lg btn-default">Daily Go</a>
             </p>
           </div>
 
