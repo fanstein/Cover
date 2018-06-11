@@ -26,3 +26,20 @@ class CatServerInfo(models.Model):
     class Meta:
         managed = False
         db_table = 'cat_server_info'
+
+
+class JmeterRuntime(models.Model):
+    id = models.AutoField(primary_key=True)
+    api_name = models.CharField(max_length=100, blank=True, null=True)
+    threads = models.CharField(max_length=100, blank=True, null=True)
+    duration = models.IntegerField(max_length=100, blank=True, null=True)
+    host = models.CharField(max_length=100, blank=True, null=True)
+    port = models.IntegerField(blank=True, null=True)
+    method = models.CharField(max_length=100, blank=True, null=True)
+    path = models.CharField(max_length=100, blank=True, null=True)
+    body_data = models.CharField(max_length=255, blank=True, null=True)
+    change_lasttime = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'jmeter_runtime'
