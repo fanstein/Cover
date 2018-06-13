@@ -4,7 +4,7 @@
 {% block mytitle %}Daily{% endblock %}
 {% block bodycontent %}
     <h4 align="left">功能任务<a href="http://ttd.swat.ctripcorp.com:8099/#/testApplyList" target="_blank">(TDS)</a></h4>
-    <table  class="table table-striped" style="text-align: left">
+    <table  class="table table-bordered" style="text-align: left">
         <tr>
             <td>项目名</td>
             <td>影响app</td>
@@ -38,4 +38,21 @@
             </tr>
         {% endfor %}
     </table>
+    <hr>
+    <form class="form-inline">
+    {% for field in form.visible_fields %}
+      <div class="form-group">
+        <label for="project_name" class="control-label table">{{ field.label }}</label>{{ field }}
+{#        <input type="text" class="form-control" id="project_name" placeholder="Jane Doe">#}
+      </div>
+    {% endfor %}
+      <div class="form-group">
+        <label for="project_name" class="control-label table"></label>
+          <button type="submit" class="btn btn-primary">
+              <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
+              提交</button>
+      </div>
+
+
+    </form>
 {% endblock %}

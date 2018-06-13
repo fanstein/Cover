@@ -28,6 +28,15 @@ class Jmeter_F(forms.Form):
         model = JmeterRuntime
         field = ('post',)
 
+
+class task_F(forms.Form):
+    project_name = forms.CharField(label='项目名', widget=forms.TextInput(attrs={'class':'form-control'}))
+    affect_app = forms.CharField(label='影响app', widget=forms.TextInput(attrs={'class':'form-control'}))
+    branch = forms.CharField(label='分支', widget=forms.TextInput(attrs={'class':'form-control'}))
+    developer = forms.CharField(label='开发', widget=forms.TextInput(attrs={'class':'form-control'}))
+    submitdate = forms.DateTimeField(label='提测日期', widget=forms.DateTimeInput(attrs={'class':'form-control'}))
+    releasedate = forms.DateTimeField(label='发布日期', widget=forms.DateTimeInput(attrs={'class':'form-control'}))
+
 #简单方式
 # {#        <form action="{% url 'perf' %}" method="post" class="form-horizontal" >#}
 # {#            {% csrf_token %}#}
