@@ -2,6 +2,11 @@
 from __future__ import unicode_literals
 
 from django.db import models
+import sys
+default_encoding = 'utf-8'
+if sys.getdefaultencoding() != default_encoding:
+    reload(sys)
+    sys.setdefaultencoding(default_encoding)
 
 # Create your models here.
 
@@ -41,7 +46,7 @@ class JmeterRuntime(models.Model):
     change_lasttime = models.DateTimeField(blank=True, null=True)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'jmeter_runtime'
 
 
