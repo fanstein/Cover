@@ -1,5 +1,6 @@
 # coding=utf8
 from django import forms
+# from django.forms import ModelForm
 from models import *
 
 Method_Choice = (
@@ -9,12 +10,12 @@ Method_Choice = (
 )
 
 
-class Form1(forms.Form):
+class Form1(forms.ModelForm):
     user = forms.CharField(label='用户名', widget=forms.TextInput(attrs={'class':'form-control'}))
     pwd = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control','type':'password'}))
 
 
-class Jmeter_F(forms.Form):
+class Jmeter_F(forms.ModelForm):
     api_name = forms.CharField(label='接口名',widget=forms.TextInput(attrs={'class':'form-control'}))
     threads = forms.CharField(initial=10,label='线程数',widget=forms.TextInput(attrs={'class':'form-control'}))
     duration = forms.IntegerField(initial=600,label='执行时长',widget=forms.TextInput(attrs={'class':'form-control'}))
@@ -26,16 +27,20 @@ class Jmeter_F(forms.Form):
 
     class Meta:
         model = JmeterRuntime
-        field = ('post',)
+        fields = ('api_name','threads','duration','host','port','method','path','body_data')
 
 
-class task_F(forms.Form):
+class task_F(forms.ModelForm):
     project_name = forms.CharField(label='项目名', widget=forms.TextInput(attrs={'class':'form-control'}))
     affect_app = forms.CharField(label='影响app', widget=forms.TextInput(attrs={'class':'form-control'}))
     branch = forms.CharField(label='分支', widget=forms.TextInput(attrs={'class':'form-control'}))
     developer = forms.CharField(label='开发', widget=forms.TextInput(attrs={'class':'form-control'}))
-    submitdate = forms.DateTimeField(label='提测日期', widget=forms.DateTimeInput(attrs={'class':'form-control'}))
-    releasedate = forms.DateTimeField(label='发布日期', widget=forms.DateTimeInput(attrs={'class':'form-control'}))
+    submitdate = forms.DateField(label='提测日期', widget=forms.DateInput(attrs={'class':'form-control'}))
+    releasedate = forms.DateField(label='发布日期', widget=forms.DateInput(attrs={'class':'form-control'}))
+
+    class Meta:
+        model = Task
+        fields = ('project_name','affect_app','branch','developer','submitdate','releasedate')
 
 #简单方式
 # {#        <form action="{% url 'perf' %}" method="post" class="form-horizontal" >#}

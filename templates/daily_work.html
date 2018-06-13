@@ -4,7 +4,19 @@
 {% block mytitle %}Daily{% endblock %}
 {% block bodycontent %}
     <h4 align="left">功能任务<a href="http://ttd.swat.ctripcorp.com:8099/#/testApplyList" target="_blank">(TDS)</a></h4>
-    <table  class="table table-bordered" style="text-align: left">
+    <style type="text/css">
+    button {
+      width: 6em
+    }
+    #tds:hover span {
+      display: none
+    }
+
+    #tds:hover:before {
+      content: '完成';
+    }
+    </style>
+    <table class="table table-bordered" style="text-align: left">
         <tr>
             <td>项目名</td>
             <td>影响app</td>
@@ -13,19 +25,26 @@
             <td>提测日期</td>
             <td>发布日期</td>
             <td>相关链接</td>
+            <td>是否完成</td>
         </tr>
         {% for key,value in data.items %}
             <tr>
                 {% if value.type == '项目' %}
                     <td>{{ key }}:{{ value.project_code }}</td>
                 {% else %}
-                    <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.project_code }}" target="_blank">{{ key }}</a></td>
+                    <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.project_code }}"
+                           target="_blank">{{ key }}</a></td>
                 {% endif %}
                 <td>{{ value.affect_app|rep:',' }}</td>
                 <td>
+                {% if value.type == 'self' %}
+                    {{ value.affect_api }}
+                    {% else %}
                     {% for key1,value1 in value.affect_api.items %}
-                        <a href="http://cd.release.ctripcorp.com/#/app/{{ key1 }}/deployment/ctrip/fat" target="_blank">{{ key1 }}</a>:{{ value1.branch }}
+                        <a href="http://cd.release.ctripcorp.com/#/app/{{ key1 }}/deployment/ctrip/fat"
+                           target="_blank">{{ key1 }}</a>:{{ value1.branch }}
                     {% endfor %}
+                {% endif %}
                 </td>
                 <td>{{ value.submitter }}</td>
                 <td>{{ value.submitDate }}</td>
@@ -35,24 +54,34 @@
                         <td><a href="http://logcube.ctripcorp.com/#?app={{ foo }}" target="_blank">clog</a></td>
                     {% endif %}
                 {% endfor %}
+                {% if value.type == 'self' %}
+                    <form action="/dailywork/daily/{{ key }}">
+                        <td><button id="tds" class="btn btn-default btn-sm"><span class="hover">未完成</span></button></td>
+                    </form>
+                    {% else %}
+                    <td><button class="btn btn-default btn-sm" disabled="disabled"><span class="no">未完成</span></button></td>
+                {% endif %}
             </tr>
         {% endfor %}
     </table>
     <hr>
-    <form class="form-inline">
-    {% for field in form.visible_fields %}
-      <div class="form-group">
-        <label for="project_name" class="control-label table">{{ field.label }}</label>{{ field }}
-{#        <input type="text" class="form-control" id="project_name" placeholder="Jane Doe">#}
-      </div>
-    {% endfor %}
-      <div class="form-group">
-        <label for="project_name" class="control-label table"></label>
-          <button type="submit" class="btn btn-primary">
-              <span class="glyphicon glyphicon-send" aria-hidden="true"></span>
-              提交</button>
-      </div>
-
-
+    <form class="form-horizontal" method="post">
+        {% csrf_token %}
+        {% for field in form.visible_fields %}
+            <div class="form-group">
+                <div class="col-md-2">
+                    <label for="project_name" class="control-label">{{ field.label }}</label>
+                </div>
+                <div class="col-md-8">
+                    {{ field }}
+                </div>
+            </div>
+        {% endfor %}
+        <div class="form-group">
+            {#        <label for="project_name" class="control-label table"></label>#}
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>提交
+            </button>
+        </div>
     </form>
 {% endblock %}

@@ -17,7 +17,7 @@
         <form method="post" action="{% url 'perf' %}" enctype="multipart/form-data">
             <!-- COMPONENT START -->
             <div class="form-group col-sm-8 col-sm-offset-2">
-                <div class="input-group input-file" name="Fichier1">
+                <div class="input-group input-file">
                     <input type="text" class="form-control" placeholder='导入脚本' />
                     <span class="input-group-btn">
                         <button class="btn btn-default btn-choose" type="button" onclick="bs_input_file()">Choose</button>
@@ -43,7 +43,7 @@
                 {% if field.errors %}
                     <div class="control-group error">
                         <label for="inputEmail3" class="col-sm-2 control-label">{{ field.label }}</label>
-                        <div class="col-sm-8">{{ field }}
+                        <div class="col-sm-6">{{ field }}
                             <span class="help-inline">
                                     {% for error in  field.errors %}{{ error }}{% endfor %}
                             </span>
@@ -51,7 +51,7 @@
                     </div>
                 {% else %}
                     <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label table">{{ field.label }}</label>
+                        <label class="col-sm-2 control-label">{{ field.label }}</label>
                         <div class="col-sm-8">{{ field }}
                             {#      <input type="text" class="form-control" id="inputEmail3" placeholder="Email">#}
                             {% if field.help_text %}
@@ -62,7 +62,7 @@
                 {% endif %}
             {% endfor %}
             <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+                <div class="col-sm-12">
                     <div class="checkbox">
                         <label>
                             <input type="checkbox"> Remember me
@@ -72,8 +72,8 @@
             </div>
 
 
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+            <div class="form-group" >
+                <div class="col-sm-12">
                     <button type="submit" class="btn btn-default">Sign in</button>
                 </div>
             </div>

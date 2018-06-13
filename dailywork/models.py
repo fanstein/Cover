@@ -43,3 +43,17 @@ class JmeterRuntime(models.Model):
     class Meta:
         managed = False
         db_table = 'jmeter_runtime'
+
+
+class Task(models.Model):
+    project_name = models.CharField(max_length=255, blank=True, null=True)
+    affect_app = models.CharField(max_length=255, blank=True, null=True)
+    branch = models.CharField(max_length=255, blank=True, null=True)
+    developer = models.CharField(max_length=255, blank=True, null=True)
+    submitdate = models.DateField(blank=True, null=True)
+    is_finish = models.BooleanField(default=False)
+    releasedate = models.DateField(blank=True, null=True)
+
+    class Meta:
+        managed = True
+        db_table = 'task'
