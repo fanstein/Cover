@@ -1,0 +1,2 @@
+# Cover
+django-bootstrap
