@@ -2,19 +2,27 @@
 {% load static %}
 {% load diy_tag %}
 {% block mytitle %}Daily{% endblock %}
+{% block selfcss %}
+    <link href="{% static 'css/starter-template.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/bootstrap-theme.min.css' %}" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/normalize.css' %}" />
+	<link rel="stylesheet" type="text/css" href="{% static 'css/default.css' %}">
+    <link href="{% static 'css/site.css' %}" rel="stylesheet" type="text/css" />
+{% endblock %}
 {% block bodycontent %}
     <h4 align="left">功能任务<a href="http://ttd.swat.ctripcorp.com:8099/#/testApplyList" target="_blank">(TDS)</a></h4>
     <style type="text/css">
-    button {
-      width: 6em
-    }
-    #tds:hover span {
-      display: none
-    }
+        button {
+            width: 6em
+        }
 
-    #tds:hover:before {
-      content: '完成';
-    }
+        #tds:hover span {
+            display: none
+        }
+
+        #tds:hover:before {
+            content: '完成';
+        }
     </style>
     <table class="table table-bordered" style="text-align: left">
         <tr>
@@ -27,31 +35,31 @@
             <td>相关链接</td>
             <td>是否完成</td>
         </tr>
-{#        type==self是自己录入数据库的#}
+        {#        type==self是自己录入数据库的#}
         {% for key,value in data.items %}
             <tr>
                 {% if value.type == '项目' %}
                     <td>{{ key }}:{{ value.project_code }}</td>
                 {% else %}
                     {% if value.type == 'self' %}
-                         <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.cp4 }}"
-                           target="_blank">{{ key }}</a></td>
+                        <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.cp4 }}"
+                               target="_blank">{{ key }}</a></td>
                     {% else %}
                         <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.project_code }}"
-                           target="_blank">{{ key }}</a></td>
+                               target="_blank">{{ key }}</a></td>
                     {% endif %}
                 {% endif %}
                 <td>{{ value.affect_app|rep:',' }}</td>
                 <td>
-                {% if value.type == 'self' %}
-                    <a href="http://cd.release.ctripcorp.com/#/app/{{ value.affect_app }}/deployment/ctrip/fat"
+                    {% if value.type == 'self' %}
+                        <a href="http://cd.release.ctripcorp.com/#/app/{{ value.affect_app }}/deployment/ctrip/fat"
                            target="_blank">{{ value.affect_app }}</a>:{{ value.affect_api }}
-                {% else %}
-                    {% for key1,value1 in value.affect_api.items %}
-                        <a href="http://cd.release.ctripcorp.com/#/app/{{ key1 }}/deployment/ctrip/fat"
-                           target="_blank">{{ key1 }}</a>:{{ value1.branch }}
-                    {% endfor %}
-                {% endif %}
+                    {% else %}
+                        {% for key1,value1 in value.affect_api.items %}
+                            <a href="http://cd.release.ctripcorp.com/#/app/{{ key1 }}/deployment/ctrip/fat"
+                               target="_blank">{{ key1 }}</a>:{{ value1.branch }}
+                        {% endfor %}
+                    {% endif %}
                 </td>
                 <td>{{ value.submitter }}</td>
                 <td>{{ value.submitDate }}</td>
@@ -63,43 +71,109 @@
                 {% endfor %}
                 {% if value.type == 'self' %}
                     <form action="/dailywork/daily/{{ key }}">
-                        <td><button id="tds" class="btn btn-default btn-sm"><span class="hover">未完成</span></button></td>
+                        <td>
+                            <button id="tds" class="btn btn-default btn-sm"><span class="hover">未完成</span></button>
+                        </td>
                     </form>
-                    {% else %}
-                    <td><button class="btn btn-default btn-sm" disabled="disabled"><span class="no">未完成</span></button></td>
+                {% else %}
+                    <td>
+                        <button class="btn btn-default btn-sm" disabled="disabled"><span class="no">未完成</span></button>
+                    </td>
                 {% endif %}
             </tr>
         {% endfor %}
     </table>
     <hr>
-    <form class="form-horizontal" method="post">
-        {% csrf_token %}
-        {% for field in form.visible_fields %}
-            <div class="form-group">
-                <div class="col-md-2">
-                    <label for="project_name" class="control-label">{{ field.label }}</label>
-                </div>
-                <div class="col-md-8">
-                    {{ field }}
+    <div class="contaner-fluid">
+        <div class="row">
+            <div class="col-md-6">
+
+                <form class="form-horizontal" method="post" style="margin-bottom: 30px">
+                    {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            <div class="col-md-2">
+                                <label for="project_name" class="control-label">{{ field.label }}</label>
+                            </div>
+                            <div class="col-md-8">
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-send" aria-hidden="true"></span>提交
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+            <div class="col-md-6">
+                <form action="#" class="form-horizontal">
+                    <div class="form-group">
+                        <lable for="appidinput" class="control-lable">APPID</lable>
+                        <input type="text" class="form-control" placeholder="appid" id="appidinput">
+                    </div>
+                    <button type="button" onclick="" class="btn btn-success">发布监控</button>
+                </form>
+
+                <div class="input-group">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span class="glyphicon glyphicon-list-alt"></span><b>News</b></div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <ul class="news">
+                                        <li class="news-item">
+                                            <table cellpadding="4">
+                                                <tr>
+                                                    <td><img src="{% static 'img/bird/1.png' %}" width="60"
+                                                             class="img-circle"/></td>
+                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                                                        in venenatis enim... <a href="#">Read more...</a></td>
+                                                </tr>
+                                            </table>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <ul class="pagination pull-right" style="margin: 0px">
+                                <li>
+                                    <a href="#" class="prev">
+                                        <span class="glyphicon glyphicon-chevron-down"></span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="next">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        {% endfor %}
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">
-                <span class="glyphicon glyphicon-send" aria-hidden="true"></span>提交
-            </button>
         </div>
-    </form>
-{#    日期控件#}
+    </div>
+
+
+    {#    日期控件#}
     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.rs.js' %}" charset="UTF-8"></script>
+    <script src="{% static 'js/jquery.bootstrap.newsbox.min.js' %}" type="text/javascript"></script>
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js" type="text/javascript"></script>
     <script type="text/javascript">
         $('.form_date').datetimepicker({
-            language:  'fr',
+            language: 'fr',
             weekStart: 1,
-            todayBtn:  1,
+            todayBtn: 1,
             autoclose: 1,
             todayHighlight: 1,
             startView: 2,

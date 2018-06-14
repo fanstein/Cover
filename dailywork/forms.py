@@ -34,8 +34,8 @@ class task_F(forms.ModelForm):
     project_name = forms.CharField(label='项目名', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
     cp4 = forms.CharField(label='cp4', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
     affect_app = forms.CharField(label='影响app', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
-    branch = forms.CharField(label='分支', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
-    developer = forms.CharField(label='开发', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
+    branch = forms.CharField(required=False,label='分支', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
+    developer = forms.CharField(required=False,label='开发', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
     submitdate = forms.DateField(label='提测日期', widget=forms.DateInput(attrs={'class':'form-control form_date','autocomplete':'off','data-date-format':'yyyy-mm-dd','data-link-format':'yyyy-mm-dd'}))
     releasedate = forms.DateField(label='发布日期', widget=forms.DateInput(attrs={'class':'form-control form_date','autocomplete':'off','data-date-format':'yyyy-mm-dd','data-link-format':'yyyy-mm-dd'}))
 
