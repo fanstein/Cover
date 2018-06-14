@@ -52,6 +52,7 @@ class JmeterRuntime(models.Model):
 
 class Task(models.Model):
     project_name = models.CharField(max_length=255, blank=True, null=True)
+    cp4 = models.CharField(max_length=255, blank=True, null=True)
     affect_app = models.CharField(max_length=255, blank=True, null=True)
     branch = models.CharField(max_length=255, blank=True, null=True)
     developer = models.CharField(max_length=255, blank=True, null=True)

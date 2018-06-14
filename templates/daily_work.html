@@ -27,19 +27,26 @@
             <td>相关链接</td>
             <td>是否完成</td>
         </tr>
+{#        type==self是自己录入数据库的#}
         {% for key,value in data.items %}
             <tr>
                 {% if value.type == '项目' %}
                     <td>{{ key }}:{{ value.project_code }}</td>
                 {% else %}
-                    <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.project_code }}"
+                    {% if value.type == 'self' %}
+                         <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.cp4 }}"
                            target="_blank">{{ key }}</a></td>
+                    {% else %}
+                        <td><a href="http://cp4.mgmt.ctripcorp.com/browse/{{ value.project_code }}"
+                           target="_blank">{{ key }}</a></td>
+                    {% endif %}
                 {% endif %}
                 <td>{{ value.affect_app|rep:',' }}</td>
                 <td>
                 {% if value.type == 'self' %}
-                    {{ value.affect_api }}
-                    {% else %}
+                    <a href="http://cd.release.ctripcorp.com/#/app/{{ value.affect_app }}/deployment/ctrip/fat"
+                           target="_blank">{{ value.affect_app }}</a>:{{ value.affect_api }}
+                {% else %}
                     {% for key1,value1 in value.affect_api.items %}
                         <a href="http://cd.release.ctripcorp.com/#/app/{{ key1 }}/deployment/ctrip/fat"
                            target="_blank">{{ key1 }}</a>:{{ value1.branch }}
@@ -78,10 +85,27 @@
             </div>
         {% endfor %}
         <div class="form-group">
-            {#        <label for="project_name" class="control-label table"></label>#}
             <button type="submit" class="btn btn-primary">
                 <span class="glyphicon glyphicon-send" aria-hidden="true"></span>提交
             </button>
         </div>
     </form>
+{#    日期控件#}
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.rs.js' %}" charset="UTF-8"></script>
+    <script type="text/javascript">
+        $('.form_date').datetimepicker({
+            language:  'fr',
+            weekStart: 1,
+            todayBtn:  1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+    </script>
+
 {% endblock %}

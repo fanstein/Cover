@@ -31,16 +31,17 @@ class Jmeter_F(forms.ModelForm):
 
 
 class task_F(forms.ModelForm):
-    project_name = forms.CharField(label='项目名', widget=forms.TextInput(attrs={'class':'form-control'}))
-    affect_app = forms.CharField(label='影响app', widget=forms.TextInput(attrs={'class':'form-control'}))
-    branch = forms.CharField(label='分支', widget=forms.TextInput(attrs={'class':'form-control'}))
-    developer = forms.CharField(label='开发', widget=forms.TextInput(attrs={'class':'form-control'}))
-    submitdate = forms.DateField(label='提测日期', widget=forms.DateInput(attrs={'class':'form-control'}))
-    releasedate = forms.DateField(label='发布日期', widget=forms.DateInput(attrs={'class':'form-control'}))
+    project_name = forms.CharField(label='项目名', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
+    cp4 = forms.CharField(label='cp4', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
+    affect_app = forms.CharField(label='影响app', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
+    branch = forms.CharField(label='分支', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
+    developer = forms.CharField(label='开发', widget=forms.TextInput(attrs={'class':'form-control','autocomplete':'off'}))
+    submitdate = forms.DateField(label='提测日期', widget=forms.DateInput(attrs={'class':'form-control form_date','autocomplete':'off','data-date-format':'yyyy-mm-dd','data-link-format':'yyyy-mm-dd'}))
+    releasedate = forms.DateField(label='发布日期', widget=forms.DateInput(attrs={'class':'form-control form_date','autocomplete':'off','data-date-format':'yyyy-mm-dd','data-link-format':'yyyy-mm-dd'}))
 
     class Meta:
         model = Task
-        fields = ('project_name','affect_app','branch','developer','submitdate','releasedate')
+        fields = ('project_name','cp4','affect_app','branch','developer','submitdate','releasedate')
 
 #简单方式
 # {#        <form action="{% url 'perf' %}" method="post" class="form-horizontal" >#}

@@ -38,13 +38,14 @@ def get_task(data):
     input_data = Task.objects.all().filter(is_finish=0)
     for each in input_data:
         project_name = each.project_name
+        cp4 = each.cp4
         affect_app = each.affect_app
         branch = each.branch
         developer = each.developer
         submitdate = str(each.submitdate)
         releasedate = str(each.releasedate)
         is_finish = each.is_finish
-        data[project_name] = {'type':'self','is_finish':is_finish,'affect_app':affect_app,
+        data[project_name] = {'type':'self','cp4':cp4,'is_finish':is_finish,'affect_app':affect_app,
                               'affect_api': branch, 'submitter': developer, 'submitDate': submitdate,
                               'releaseETA': releasedate}
     return data
@@ -67,12 +68,11 @@ def perf(request):
 # show create table tester.task;
 def daily_task(request):
     tds_data = tds_req()
-    if tds_data['message'] == 'error':
-        raise Exception, 'tds return error'
     data = tds_data['data']
     if tds_data['message'] == 'error':
         print 'response error!!!'
         return render_to_response('daily_work.html', {'text': 'wwooo!!! error'})
+    # 通过form save保存数据到数据库
     if request.method == "POST":
         task = task_F(request.POST)
         if task.is_valid():
@@ -80,11 +80,13 @@ def daily_task(request):
         else:
             print task.errors
             return render(request, "daily_work.html", {"error": task.errors, "form": task, "data": data})
+    # 修改本地任务是否完成
     elif request.method == "GET":
         task = task_F()
         project_name = request.path.split('/')[-1]
         # project_name = request.GET.get('name')
         Task.objects.filter(project_name=project_name).update(is_finish=1)
+    # 加载时，form为空
     else:
         # 如果不是post提交数据，就不传参数创建对象，并将对象返回给前台，直接生成input标签，内容为空
         task = task_F()
