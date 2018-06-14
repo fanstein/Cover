@@ -69,6 +69,7 @@ def perf(request):
 def daily_task(request):
     tds_data = tds_req()
     data = tds_data['data']
+    # data = {}
     if tds_data['message'] == 'error':
         print 'response error!!!'
         return render_to_response('daily_work.html', {'text': 'wwooo!!! error'})

@@ -13,6 +13,7 @@ def tds_req():
     :return: 任务
     """
     url = "http://10.28.87.30:8080/tds-web/info/queryTestFormByCondition"
+    # url = "https://bd2c2480-60c5-4bd4-89cd-9e415858aa8e.mock.pstmn.io/tds-web/info/queryTestFormByCondition"
     payload = "{\"tester\":\"fp范鹏\",\"pass\":false,\"released\":false,\"orgName\":\"度假研发部\",\"user\":\"fp范鹏\"}"
     headers = {
         'accept': "application/json, text/javascript, */*; q=0.01",
