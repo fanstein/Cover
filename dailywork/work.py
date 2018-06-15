@@ -1,5 +1,6 @@
 # coding: utf8
 import requests
+from requests import ConnectionError, RequestException, HTTPError
 import sys, os
 from common import *
 
@@ -48,5 +49,29 @@ def tds_req():
     return {'message': 'success', 'data': data}
 
 
+def development(appid, env='FAT'):
+    url = "http://cd.release.ctripcorp.com/api/v2/applications/{0}/releases/".format(str(appid))
+    querystring = {"env": env, "page": "1", "page_size": "15"}
+    try:
+        response = requests.request("GET", url, params=querystring)
+    except ConnectionError, e:
+        raise e, 'conneterror'
+    except HTTPError, e:
+        raise e
+    except RequestException, e:
+        raise e
+    try:
+        response_json = response.json()
+    except Exception, e:
+        raise e, 'return error'
+    results = response_json['results'][0]
+    build_status = results['build']['job_status']
+    deployment_status = results['deployment']['status']
+    operator = results['operator']
+    name = results['build']['name']
+    data = {'name':name,'build':build_status,'deployment_status':deployment_status,'operator':operator}
+    return data
+
+
 if __name__ == '__main__':
-    print tds_req()
+    development(140411)

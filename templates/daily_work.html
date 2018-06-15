@@ -2,6 +2,31 @@
 {% load static %}
 {% load diy_tag %}
 {% block mytitle %}Daily{% endblock %}
+{% block js %}
+    <script src="{% static 'js/notify.js' %}" type="text/javascript"></script>
+    <script type="text/javascript">
+        function inputvalue() {
+            var env = 'FAT';
+            var appid = document.getElementById("appidinput").value;
+            var url = '/dailywork/deploy/?appid='+ appid + "&env=" + env;
+            $.ajax({url:url,
+                error:function () {
+                    alert("数据加载出错，请稍后重试")
+                },
+                beforeSend:function () {
+                    $("#loading").modal("show");
+                },
+                success:function (rsp) {
+                    $("#loading").modal("hide");
+{#                    alert(JSON.parse(rsp));#}
+                    var title = appid + ' '+ rsp.name.split(/_|-/)[1] + ' '+ rsp.operator;
+                    var message = '编译:'+rsp.build +', 发布:'+rsp.deployment_status;
+                    checkNotification(title,message)
+                }
+            });
+        }
+    </script>
+{% endblock %}
 {% block selfcss %}
     <link href="{% static 'css/starter-template.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/bootstrap-theme.min.css' %}" rel="stylesheet" type="text/css"/>
@@ -10,20 +35,20 @@
     <link href="{% static 'css/site.css' %}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block bodycontent %}
-    <h4 align="left">功能任务<a href="http://ttd.swat.ctripcorp.com:8099/#/testApplyList" target="_blank">(TDS)</a></h4>
     <style type="text/css">
         button {
             width: 6em
         }
-
         #tds:hover span {
             display: none
         }
-
         #tds:hover:before {
             content: '完成';
         }
     </style>
+    <br>
+    <div id="loading" class="loading">数据加载中...</div>
+    <h4 align="left">功能任务<a href="http://ttd.swat.ctripcorp.com:8099/#/testApplyList" target="_blank">(TDS)</a></h4>
     <table class="table table-bordered" style="text-align: left">
         <tr>
             <td>项目名</td>
@@ -109,92 +134,53 @@
 
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <form action="#" class="form-inline">
                     <div class="form-group">
                         <lable for="appidinput" class="control-lable">APPID</lable>
-                        <input type="text" class="form-control" placeholder="appid" id="appidinput">
+                        <input type="text" class="form-control" placeholder="appid" id="appidinput" value="140411">
                     </div>
-                    <button type="button" onclick="" class="btn btn-success">发布监控</button>
+                    <button type="button" onclick="inputvalue()" class="btn btn-success">发布监控</button>
                 </form>
             </div>
-            <hr>
-            <hr>
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <span class="glyphicon glyphicon-list-alt"></span><b>News</b></div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <ul class="news">
-                                        <li class="news-item">
-                                            <table cellpadding="4">
-                                                <tr>
-                                                    <td><img src="{% static 'img/bird/1.png' %}" width="60"
-                                                             class="img-circle"/></td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                                                        in venenatis enim... <a href="#">Read more...</a></td>
-                                                </tr>
-                                            </table>
-                                        </li>
-                                        <li class="news-item">
-                                            <table cellpadding="4">
-                                                <tr>
-                                                    <td><img src="{% static 'img/bird/2.png' %}" width="60"
-                                                             class="img-circle"/></td>
-                                                    <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-                                                        in venenatis enim... <a href="#">Read more...</a></td>
-                                                </tr>
-                                            </table>
-                                        </li>
-                                    </ul>
-                                </div>
+
+            <div class="col-md-4 mp30">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-list-alt"></span><b>News</b></div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <ul class="news">
+                                    <li class="news-item">
+                                        <table cellpadding="4">
+                                            <tr>
+                                                <td><img src="{% static 'img/bird/1.png' %}" width="60"
+                                                         class="img-circle"/></td>
+                                                <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in
+                                                    venenatis enim... <a href="#">Read more...</a></td>
+                                            </tr>
+                                        </table>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="panel-footer">
-                            <ul class="pagination pull-right" style="margin: 0px">
-                                <li>
-                                    <a href="#" class="prev">
-                                        <span class="glyphicon glyphicon-chevron-down"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#" class="next">
-                                        <span class="glyphicon glyphicon-chevron-up"></span>
-                                    </a>
-                                </li>
-                            </ul>
-
-                        </div>
+                    </div>
+                    <div class="panel-footer">
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="{% static 'js/jquery-1.10.2.min.js' %}" type="text/javascript"></script>
+
     <script src="{% static 'js/jquery.bootstrap.newsbox.min.js' %}" type="text/javascript"></script>
-    <script src="{% static 'js/jquery-1.10.2.js' %}" type="text/javascript"></script>
-{#    <script type=text/javascript">#}
-{#        $(function () {#}
-{#            $('.news').bootstrapNews({#}
-{#                newsPerPage: 1,#}
-{#                autoplay: true,#}
-{#                pauseOnHover: true,#}
-{#                direction: 'up',#}
-{#                newsTickerInterval: 4000,#}
-{#                onToDo: function () {#}
-{#                    console.log(this);#}
-{#                }#}
-{#            });#}
-{#        });#}
-{#    </script>#}
-    {#    日期控件#}
-    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    {#    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>#}
     <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.js' %}" charset="UTF-8"></script>
     <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.rs.js' %}" charset="UTF-8"></script>
+
     <script type="text/javascript">
         $('.form_date').datetimepicker({
             language: 'fr',
@@ -206,18 +192,20 @@
             minView: 2,
             forceParse: 0
         });
+
         $(function () {
             $('.news').bootstrapNews({
-                newsPerPage: 1,
+                newsPerPage: 4,
                 autoplay: true,
-                pauseOnHover: true,
+                pauseOnHover: false,
                 direction: 'up',
                 newsTickerInterval: 4000,
                 onToDo: function () {
-                    console.log(this);
+                    //console.log(this);
                 }
             });
         });
+
     </script>
 
 {% endblock %}

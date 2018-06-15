@@ -11,11 +11,10 @@ function checkNotification(title,message) {
     else if (Notification.permission === "granted") {
         // If it's okay let's create a notification
         var notify = new Notification(title,{dir:'auto',lang:'zh-CN',icon:'/static/img/curious.ico',body:message});
-        notify.onshow = function () {
-                    setTimeout(function(){
-                        notify.close();
-                    },600000)
-                };
+        notify.onclick = function (event) {
+            event.preventDefault(); // prevent the browser from focusing the Notification's tab
+            window.open('http://www.mozilla.org', '_blank');
+        }
     }
     // Otherwise, ask the user for permission
     else if (Notification.permission !== 'denied') {

@@ -25,16 +25,21 @@ def daily(request):
 
 class ServerListView(generic.ListView):
     model = CatServerInfo
-    template_name = 'test_list.html'
+    template_name = 'learn/test_list.html'
 
 
 class ServerDetailView(generic.DetailView):
     model = CatServerInfo
-    template_name = 'test_detail.html'
+    template_name = 'learn/test_detail.html'
     # pk_url_kwarg = 'id'
 
 
 def get_task(data):
+    """
+    数据库获取手动输入任务
+    :param data:
+    :return:
+    """
     input_data = Task.objects.all().filter(is_finish=0)
     for each in input_data:
         project_name = each.project_name
@@ -52,6 +57,11 @@ def get_task(data):
 
 
 def perf(request):
+    """
+    性能表单
+    :param request:
+    :return:
+    """
     if request.method == "POST":
         f = Jmeter_F(request.POST)
         if f.is_valid():
@@ -65,8 +75,28 @@ def perf(request):
     return render(request, "perf.html", {"form": f})
 
 
+def deploy(request):
+    """
+    发布通知
+    :param request:
+    :return: work.development()
+    """
+    try:
+        appid = request.GET.get('appid')
+        env = request.GET.get('env')
+    except Exception,e:
+        raise e,'request get attribute error'
+    data = development(appid=appid, env=env)
+    return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json; charset=utf-8')
+
+
 # show create table tester.task;
 def daily_task(request):
+    """
+    dail.html对应的后台应用
+    :param request:
+    :return:
+    """
     tds_data = tds_req()
     data = tds_data['data']
     # data = {}
@@ -85,7 +115,6 @@ def daily_task(request):
     elif request.method == "GET":
         task = task_F()
         project_name = request.path.split('/')[-1]
-        # project_name = request.GET.get('name')
         Task.objects.filter(project_name=project_name).update(is_finish=1)
     # 加载时，form为空
     else:
