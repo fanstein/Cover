@@ -63,3 +63,17 @@ class Task(models.Model):
     class Meta:
         managed = True
         db_table = 'task'
+
+# CREATE TABLE `perf_result` (
+#   `id` int(11) NOT NULL AUTO_INCREMENT,
+#   `path` varchar(255) DEFAULT NULL COMMENT '结果路径',
+#   `response` varchar(255) DEFAULT NULL COMMENT '响应时间',
+#   `tps` varchar(255) DEFAULT NULL COMMENT 'tps',
+#   `success_percent` varchar(255) DEFAULT NULL COMMENT '成功率',
+#   `exec_time` datetime DEFAULT NULL COMMENT '执行时间',
+#   `create_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+#   `name` varchar(255) DEFAULT NULL COMMENT '接口名',
+#   `appid` varchar(255) DEFAULT NULL COMMENT '应用id',
+#   PRIMARY KEY (`id`),
+#   UNIQUE KEY `perf_result_id_uindex` (`id`)
+# ) ENGINE=InnoDB DEFAULT CHARSET=utf8

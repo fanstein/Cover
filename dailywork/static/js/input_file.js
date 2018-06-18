@@ -24,6 +24,19 @@ function bs_input_file() {
 		}
 	);
 }
-$(function() {
-	bs_input_file();
-});
+// $(function() {
+// 	bs_input_file();
+// });
+
+function json_view() {
+	var text = document.getElementById('json').value; //获取json格式内容
+	try{
+        var json;
+        json = JSON.stringify(JSON.parse(text), null, 2);//将字符串转换成json对象
+    	document.getElementById('json').value = json ;
+	}catch(e) {
+		document.getElementById('json').value = text ;
+	}
+
+
+}

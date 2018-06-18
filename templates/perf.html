@@ -7,78 +7,130 @@
 
 {% block bodycontent %}
 
-    {% if form.is_valid %}
-        <p>提交的post数据:
-            user:{{ form.user.value }}
-            passw:{{ form.pwd.value }}
-        </p>
-    {% else %}
+    <div class="col-md-6">
 
-        <form method="post" action="{% url 'perf' %}" enctype="multipart/form-data">
-            <!-- COMPONENT START -->
-            <div class="form-group col-sm-8 col-sm-offset-2">
-                <div class="input-group input-file">
-                    <input type="text" class="form-control" placeholder='导入脚本' />
-                    <span class="input-group-btn">
-                        <button class="btn btn-default btn-choose" type="button" onclick="bs_input_file()">Choose</button>
+        {% if form.is_valid %}
+            <p>提交的post数据:
+                user:{{ form.user.value }}
+                passw:{{ form.pwd.value }}
+            </p>
+        {% else %}
+
+            <form method="post" action="{% url 'perf' %}" enctype="multipart/form-data">
+                <!-- COMPONENT START -->
+                <div class="form-group col-sm-8 col-sm-offset-2">
+                    <div class="input-group input-file">
+                        <input type="text" class="form-control" placeholder='导入脚本'/>
+                        <span class="input-group-btn">
+                        <button class="btn btn-default btn-choose" type="button"
+                                onclick="bs_input_file()">Choose</button>
                     </span>
+                    </div>
                 </div>
+
+                <!-- COMPONENT END -->
+                <div class="form-group col-sm-8 col-sm-offset-2">
+                    <button type="submit" class="btn btn-primary pull-right" disabled>Submit</button>
+                    <button type="reset" class="btn btn-danger pull-left">Reset</button>
+                </div>
+
+            </form>
+
+            <div class="control-group col-sm-12">
+                <hr>
             </div>
 
-            <!-- COMPONENT END -->
-            <div class="form-group col-sm-8 col-sm-offset-2">
-                <button type="submit" class="btn btn-primary pull-right" disabled >Submit</button>
-                <button type="reset" class="btn btn-danger pull-left">Reset</button>
-            </div>
-
-        </form>
-
-        <div class="control-group col-sm-12">
-            <hr>
-        </div>
-
-        <form class="form-horizontal" method="post">
-            {% csrf_token %}
-            {% for field in form.visible_fields %}
-                {% if field.errors %}
-                    <div class="control-group error">
-                        <label for="inputEmail3" class="col-sm-2 control-label">{{ field.label }}</label>
-                        <div class="col-sm-6">{{ field }}
-                            <span class="help-inline">
+            <form class="form-horizontal" method="post">
+                {% csrf_token %}
+                {% for field in form.visible_fields %}
+                    {% if field.errors %}
+                        <div class="control-group error">
+                            <label for="inputEmail3" class="col-sm-2 control-label">{{ field.label }}</label>
+                            <div class="col-sm-6">{{ field }}
+                                <span class="help-inline">
                                     {% for error in  field.errors %}{{ error }}{% endfor %}
                             </span>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{ field.label }}</label>
+                            <div class="col-sm-8">{{ field }}
+                                {#      <input type="text" class="form-control" id="inputEmail3" placeholder="Email">#}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Remember me
+                            </label>
                         </div>
                     </div>
-                {% else %}
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">{{ field.label }}</label>
-                        <div class="col-sm-8">{{ field }}
-                            {#      <input type="text" class="form-control" id="inputEmail3" placeholder="Email">#}
-                            {% if field.help_text %}
-                                <small class="form-text text-muted">{{ field.help_text }}</small>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endif %}
-            {% endfor %}
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox"> Remember me
-                        </label>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-default">Sign in</button>
                     </div>
                 </div>
-            </div>
+            </form>
+
+        {% endif %}
+
+    </div>
 
 
-            <div class="form-group" >
-                <div class="col-sm-12">
-                    <button type="submit" class="btn btn-default">Sign in</button>
-                </div>
-            </div>
-        </form>
+    <div class="col-md-6">
+        <table class="table table-hover table-bordered">
+            <thead>
+            <tr>
+                <th hidden="hidden">序号</th>
+                <th>应用和接口</th>
+                <th>响应时间</th>
+                <th>TPS</th>
+                <th>成功率</th>
+                <th>测试时间</th>
+            </tr>
+            </thead>
+            <tbody id="J_template">
+            {% if categories.length == 0 %}
+                <tr>
+                    <td style="text-align: center;"> 无查询结果</td>
+                </tr>
+            {% else %}
+                {% for each in categrorie.itmes %}
+                <c:forEach var="category" items="${categories}">
+                    <tr id="item">
+                        <td hidden="hidden">${category.id}</td>
+                        <td>${category.name}</td>
+                        <td>${category.mnemonicCode}</td>
+                        <td>
+                            <div class="visible-md visible-lg hidden-sm hidden-xs action-buttons">
+                                <a id="editLink" class="blue"
+                                   onclick="editCategory(${category.id},'${category.name}','${category.mnemonicCode}')"
+                                   data-toggle="modal"
+                                   data-target="#editModel"
+                                   title="编辑" style="cursor:pointer;">[编辑]</a>
+                                <a id="delLink" class="blue"
+                                   onclick="delCategory(${category.id})" data-toggle="modal"
+                                   data-target="#tipModel"
+                                   title="删除" style="cursor:pointer;">[删除]</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
 
-    {% endif %}
+    </div>
+
 
 {% endblock %}

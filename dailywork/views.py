@@ -84,7 +84,7 @@ def deploy(request):
     try:
         appid = request.GET.get('appid')
         env = request.GET.get('env')
-    except Exception,e:
+    except Exception as e:
         raise e,'request get attribute error'
     data = development(appid=appid, env=env)
     return HttpResponse(json.dumps(data, ensure_ascii=False), content_type='application/json; charset=utf-8')
