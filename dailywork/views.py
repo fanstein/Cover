@@ -50,11 +50,33 @@ def get_task(data):
         submitdate = str(each.submitdate)
         releasedate = str(each.releasedate)
         is_finish = each.is_finish
-        data[project_name] = {'type':'self','cp4':cp4,'is_finish':is_finish,'affect_app':affect_app,
+        data[project_name] = {'type': 'self', 'cp4': cp4, 'is_finish': is_finish, 'affect_app': affect_app,
                               'affect_api': branch, 'submitter': developer, 'submitDate': submitdate,
                               'releaseETA': releasedate}
     return data
 
+
+def get_perf_result(request):
+    """
+    获取测试结果
+    :param request:
+    :return:
+    """
+    data = []
+    if request.method == 'GET':
+        result = PerfResult.objects.all()
+        total = result.count()
+        for each in result:
+            id = each.id
+            response = each.response
+            tps = each.tps
+            success = each.success_percent
+            exec_time = each.exec_time
+            appid = each.appid
+            name = each.name
+            path =each.path
+            data.append({'id':id, 'name':appid+':'+name, 'success':success, 'TPS':tps, 'time':response,'create_time':exec_time})
+        return HttpResponse({'total':total,'row':data})
 
 def perf(request):
     """
@@ -62,6 +84,7 @@ def perf(request):
     :param request:
     :return:
     """
+    # result = PerfResult.objects.all()
     if request.method == "POST":
         f = Jmeter_F(request.POST)
         if f.is_valid():

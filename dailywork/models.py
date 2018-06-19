@@ -64,7 +64,23 @@ class Task(models.Model):
         managed = True
         db_table = 'task'
 
-# CREATE TABLE `perf_result` (
+
+class PerfResult(models.Model):
+    path = models.CharField(max_length=255, blank=True, null=True)
+    response = models.CharField(max_length=255, blank=True, null=True)
+    tps = models.CharField(max_length=255, blank=True, null=True)
+    success_percent = models.CharField(max_length=255, blank=True, null=True)
+    exec_time = models.DateTimeField(blank=True, null=True)
+    create_time = models.DateTimeField(blank=True, null=True)
+    name = models.CharField(max_length=255, blank=True, null=True)
+    appid = models.CharField(max_length=255, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'perf_result'
+
+
+                # CREATE TABLE `perf_result` (
 #   `id` int(11) NOT NULL AUTO_INCREMENT,
 #   `path` varchar(255) DEFAULT NULL COMMENT '结果路径',
 #   `response` varchar(255) DEFAULT NULL COMMENT '响应时间',

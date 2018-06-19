@@ -13,8 +13,8 @@ def tds_req():
     tds任务列表
     :return: 任务
     """
-    # url = "http://10.28.87.30:8080/tds-web/info/queryTestFormByCondition"
-    url = "https://bd2c2480-60c5-4bd4-89cd-9e415858aa8e.mock.pstmn.io/tds-web/info/queryTestFormByCondition"
+    url = "http://10.28.87.30:8080/tds-web/info/queryTestFormByCondition"
+    # url = "https://bd2c2480-60c5-4bd4-89cd-9e415858aa8e.mock.pstmn.io/tds-web/info/queryTestFormByCondition"
     payload = "{\"tester\":\"fp范鹏\",\"pass\":false,\"released\":false,\"orgName\":\"度假研发部\",\"user\":\"fp范鹏\"}"
     headers = {
         'accept': "application/json, text/javascript, */*; q=0.01",
@@ -50,8 +50,8 @@ def tds_req():
 
 
 def development(appid, env='FAT'):
-    # url = "http://cd.release.ctripcorp.com/api/v2/applications/{0}/releases/".format(str(appid))
-    url = "http://900b5ac8-b6cb-4be8-b91a-468d938f9a61.mock.pstmn.io/api/v2/applications/{0}/releases/".format(str(appid))
+    url = "http://cd.release.ctripcorp.com/api/v2/applications/{0}/releases/".format(str(appid))
+    # url = "http://900b5ac8-b6cb-4be8-b91a-468d938f9a61.mock.pstmn.io/api/v2/applications/{0}/releases/".format(str(appid))
     querystring = {"env": env, "page": "1", "page_size": "15"}
     try:
         response = requests.request("GET", url, params=querystring)

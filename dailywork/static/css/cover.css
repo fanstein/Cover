@@ -63,6 +63,10 @@ body {
 /*
  * Header
  */
+nav{
+background-color: darkslategray;
+}
+
 .masthead-brand {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -154,6 +158,8 @@ body {
     width: 100%; /* Must be percentage or pixels for horizontal alignment */
   }
 }
+
+
 
 @media (min-width: 992px) {
   .masthead,
