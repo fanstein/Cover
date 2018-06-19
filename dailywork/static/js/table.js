@@ -13,20 +13,20 @@ function initTable() {
           rowspan: 1,
           align: 'center'
         }, {
-          title: 'ÁĞ±í',
+          title: 'åˆ—è¡¨',
           field: 'id',
           rowspan: 1,
           align: 'center',
           sortable: true
         }, {
           field: 'name',
-          title: 'Ó¦ÓÃºÍ½Ó¿Ú',
+          title: 'åº”ç”¨å’Œæ¥å£',
           sortable: true,
           editable: true,
           align: 'center'
         }, {
           field: 'time',
-          title: 'Æ½¾ùÏìÓ¦Ê±¼ä',
+          title: 'å¹³å‡å“åº”æ—¶é—´',
           sortable: true,
           editable: true,
           align: 'center'
@@ -38,19 +38,19 @@ function initTable() {
           align: 'center'
         }, {
           field: 'success',
-          title: '³É¹¦ÂÊ',
+          title: 'æˆåŠŸç‡',
           sortable: true,
           editable: true,
           align: 'center'
         }, {
           field: 'create_time',
-          title: '²âÊÔÊ±¼ä',
+          title: 'æ‰§è¡Œæ—¶é—´',
           sortable: true,
           editable: true,
           align: 'center'
         },  {
           field: 'operate',
-          title: '²Ù×÷',
+          title: 'æ“ä½œ',
           align: 'center',
           events: operateEvents,
           formatter: operateFormatter
