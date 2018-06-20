@@ -63,7 +63,7 @@ def get_perf_result(request):
     :return:
     """
     data = []
-    if request.method == 'GET':
+    if request.method == 'GET' or request.method == 'POST':
         result = PerfResult.objects.all()
         total = result.count()
         for each in result:
@@ -75,8 +75,11 @@ def get_perf_result(request):
             appid = each.appid
             name = each.name
             path =each.path
-            data.append({'id':id, 'name':appid+':'+name, 'success':success, 'TPS':tps, 'time':response,'create_time':exec_time})
-        return HttpResponse({'total':total,'row':data})
+            attribute = each.attribute
+            data.append({'id':id, 'name':appid+':'+name, 'success':success, 'TPS':tps, 'time':response,'create_time':str(exec_time),'attribute':attribute})
+        res = {'total':total,'rows':data}
+        return HttpResponse(json.dumps(res, ensure_ascii=False), content_type='application/json; charset=utf-8')
+
 
 def perf(request):
     """

@@ -13,7 +13,7 @@ function initTable() {
           rowspan: 1,
           align: 'center'
         }, {
-          title: 'id',
+          title: '列表',
           field: 'id',
           rowspan: 1,
           align: 'center',
@@ -49,7 +49,7 @@ function initTable() {
           editable: true,
           align: 'center'
         },  {
-          field: 'attribute',
+          field: 'operate',
           title: '操作',
           align: 'center',
           events: operateEvents,

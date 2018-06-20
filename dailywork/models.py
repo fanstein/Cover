@@ -74,6 +74,7 @@ class PerfResult(models.Model):
     create_time = models.DateTimeField(blank=True, null=True)
     name = models.CharField(max_length=255, blank=True, null=True)
     appid = models.CharField(max_length=255, blank=True, null=True)
+    attribute =models.CharField(max_length=255, default='1')
 
     class Meta:
         managed = False
