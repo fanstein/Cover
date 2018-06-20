@@ -71,7 +71,7 @@ def get_perf_result(request):
             response = each.response
             tps = each.tps
             success = each.success_percent
-            exec_time = each.exec_time
+            exec_time = each.exec_time.strftime("%Y-%m-%d %H:%M:%S")
             appid = each.appid
             name = each.name
             path =each.path
