@@ -1,0 +1,113 @@
+{% extends "bootstrap_base.html" %}
+{% load static %}
+{% block mytitle %}tools{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/codemirror/codemirror.js' %}"></script>
+    <script src="{% static 'js/codemirror/javascript.js' %}"></script>
+{% endblock %}
+{% block body %}
+    <link rel="stylesheet" href="{% static 'css/codemirror/codemirror.css' %}">
+    <link rel="stylesheet" href="{% static 'css/codemirror/mdn-like.css' %}">
+    <link rel="stylesheet" href="{% static 'css/codemirror/solarized.css' %}">
+    <link rel="stylesheet" href="{% static 'css/codemirror/duotone-light.css' %}">
+    <style>
+        body {
+            min-height: 300px;
+            padding-top: 90px;
+            background: #f6f6f6;
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+    </style>
+
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <form class="form-inline">
+                            <div class="row">
+                                <div class="col-xs-4">
+                                    <button class="btn btn-default" type="button" onclick="json_view()">整理代码</button>
+                                </div>
+                                <div class="col-xs-8 text-right">
+                                    <label for="node" class="control-label sr-only">选择节点:</label>
+                                    <input type="text" class="form-control" id="node" placeholder="节点已 . 分隔">
+                                    <button class="btn btn-success" onclick="" type="button">
+                                        <span class="glyphicon glyphicon-send"></span> 点击运行
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-body">
+                        <label for="code"></label>
+                        <textarea name="code" id="code"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <form action="" class="form-inline">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <button class="btn btn-success" onclick="" type="button">
+                                        <span class="glyphicon glyphicon-send"></span> 点击运行
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="panel-body">
+                        <iframe src="" frameborder="0" style="height: 615px"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function json_view() {
+            let text = document.getElementById('area_left').value; //获取json格式内容
+            try {
+                let json;
+                json = JSON.stringify(JSON.parse(text), null, 2);//将字符串转换成json对象
+                document.getElementById('area_left').value = json;
+            } catch (e) {
+                document.getElementById('area_left').value = text;
+            }
+        }
+
+        function parse_json() {
+            let text = document.getElementById('area_left').value; //获取json格式内容
+            let json_obj = JSON.parse(text)
+        }
+
+        //根据DOM元素的id构造出一个编辑器
+        let editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+            {#            mode: "text/javascript", //实现Java代码高亮#}
+            lineNumbers: true,	//显示行号
+            theme: "mdn-like",	//设置主题
+            lineWrapping: true,	//代码折叠
+            {#            foldGutter: true,#}
+            {#            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],#}
+            {#            matchBrackets: true,	//括号匹配#}
+            {#            indentUnit: 4,#}
+            {#            indentWithTabs: true,#}
+            {#            selectionPointer: true,#}
+        });
+        editor.setSize("100%", '600px');    //给代码框赋值
+        {#        editor.setValue("");    //获取代码框的值#}
+
+    </script>
+{% endblock %}
