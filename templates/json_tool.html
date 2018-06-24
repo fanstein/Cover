@@ -42,7 +42,7 @@
                                 <div class="col-xs-8 text-right">
                                     <label for="node" class="control-label sr-only">选择节点:</label>
                                     <input type="text" class="form-control" id="node" placeholder="节点已 . 分隔">
-                                    <button class="btn btn-success" onclick="" type="button">
+                                    <button class="btn btn-success" onclick="parse_json()" type="button">
                                         <span class="glyphicon glyphicon-send"></span> 点击运行
                                     </button>
                                 </div>
@@ -61,15 +61,16 @@
                         <form action="" class="form-inline">
                             <div class="row">
                                 <div class="col-xs-6">
-                                    <button class="btn btn-success" onclick="" type="button">
-                                        <span class="glyphicon glyphicon-send"></span> 点击运行
+                                    <button class="btn btn-info" onclick="" type="button">
+                                        <span class="glyphicon glyphicon-send"></span> 运行结果
                                     </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div class="panel-body">
-                        <iframe src="" frameborder="0" style="height: 615px"></iframe>
+{#                        <iframe src="" frameborder="0" style="height: 615px" id="result"></iframe>#}
+                        <label for="result"></label><textarea disabled readonly id="result" style="width: 100%; height: 615px;resize: none; border: 0" ></textarea>
                     </div>
                 </div>
             </div>
@@ -88,26 +89,32 @@
             }
         }
 
-        function parse_json() {
-            let text = document.getElementById('area_left').value; //获取json格式内容
-            let json_obj = JSON.parse(text)
-        }
-
-        //根据DOM元素的id构造出一个编辑器
         let editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-            {#            mode: "text/javascript", //实现Java代码高亮#}
             lineNumbers: true,	//显示行号
             theme: "mdn-like",	//设置主题
             lineWrapping: true,	//代码折叠
-            {#            foldGutter: true,#}
-            {#            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],#}
-            {#            matchBrackets: true,	//括号匹配#}
-            {#            indentUnit: 4,#}
-            {#            indentWithTabs: true,#}
-            {#            selectionPointer: true,#}
         });
         editor.setSize("100%", '600px');    //给代码框赋值
         {#        editor.setValue("");    //获取代码框的值#}
+
+        function parse_json() {
+{#            let text = document.getElementById('code').value; //获取json格式内容#}
+            let text = editor.getValue();
+            let node = document.getElementById('node').value;
+            let array = node.split('.');
+            let json_obj = JSON.parse(text);
+            let json_node = json_obj;
+            for (j = 0; j < array.length - 1; j++) {
+                json_node = json_node[array[j]]
+            }
+            let node_last = array[array.length - 1];
+            let node_out = '';
+            for (let x in json_node) {
+                node_out = node_out  + json_node[x][node_last]+ '\r\n';
+            }
+            document.getElementById('result').innerHTML = node_out;
+            console.log(node_out);
+        }
 
     </script>
 {% endblock %}
