@@ -89,11 +89,13 @@
                 <td>{{ value.submitter }}</td>
                 <td>{{ value.submitDate }}</td>
                 <td>{{ value.releaseETA }}</td>
-                {% for foo in value.affect_app|get_list:',' %}
-                    {% if foo %}
-                        <td><a href="http://logcube.ctripcorp.com/#?app={{ foo }}" target="_blank">clog</a></td>
-                    {% endif %}
-                {% endfor %}
+                <td>
+                    {% for foo in value.affect_app|get_list:',' %}
+                        {% if foo %}
+                            <a href="http://logcube.ctripcorp.com/#?app={{ foo }}" target="_blank">clog</a>
+                        {% endif %}
+                    {% endfor %}
+                </td>
                 {% if value.type == 'self' %}
                     <form action="/dailywork/daily/{{ key }}">
                         <td>
