@@ -98,20 +98,27 @@
         {#        editor.setValue("");    //获取代码框的值#}
 
         function parse_json() {
+            let node_out = '';
 {#            let text = document.getElementById('code').value; //获取json格式内容#}
             let text = editor.getValue();
             let node = document.getElementById('node').value;
-            let array = node.split('.');
             let json_obj = JSON.parse(text);
             let json_node = json_obj;
+            let array = node.split('.');
             for (j = 0; j < array.length - 1; j++) {
-                json_node = json_node[array[j]]
+                    json_node = json_node[array[j]]
+                }
+
+            if (array[array.length] = ''){
+                node_out=json_node
+            }else{
+                let node_last = array[array.length - 1];
+                for (let x in json_node) {
+                    node_out = node_out  + json_node[x][node_last] + '\r\n';
+                }
             }
-            let node_last = array[array.length - 1];
-            let node_out = '';
-            for (let x in json_node) {
-                node_out = node_out  + json_node[x][node_last]+ '\r\n';
-            }
+
+
             document.getElementById('result').innerHTML = node_out;
             console.log(node_out);
         }
