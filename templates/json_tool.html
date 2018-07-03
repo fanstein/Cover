@@ -109,8 +109,8 @@
                     json_node = json_node[array[j]]
                 }
 
-            if (array[array.length] = ''){
-                node_out=json_node
+            if (array[array.length-1] === ''){
+                  node_out=JSON.stringify(json_node);
             }else{
                 let node_last = array[array.length - 1];
                 for (let x in json_node) {
