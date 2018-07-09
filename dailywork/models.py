@@ -81,7 +81,9 @@ class PerfResult(models.Model):
         db_table = 'perf_result'
 
 
-                # CREATE TABLE `perf_result` (
+
+
+# CREATE TABLE `perf_result` (
 #   `id` int(11) NOT NULL AUTO_INCREMENT,
 #   `path` varchar(255) DEFAULT NULL COMMENT '结果路径',
 #   `response` varchar(255) DEFAULT NULL COMMENT '响应时间',
