@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html'),name='home'),
     url(r'^notice/$', TemplateView.as_view(template_name='notice.html'),name='notice'),
     url(r'^json_tool/$', TemplateView.as_view(template_name='json_tool.html'), name='json_tool'),
+    url(r'^apisearch/$', TemplateView.as_view(template_name='apisearch.html'), name='apisearch'),
     url(r'^test/$', TemplateView.as_view(template_name='test.html'), name='test'),
     url(r'^perf/$', perf, name='perf'),
     url(r'^task/', get_task, name='task'),
