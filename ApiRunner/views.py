@@ -4,6 +4,7 @@ import os
 import requests
 import unittest
 import utils
+from utils import *
 
 
 class ApiTest(unittest.TestCase):

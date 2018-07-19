@@ -1,5 +1,10 @@
 # coding:utf8
 
+class exception(Exception):
+    @staticmethod
+    def ParamsError(message):
+        pass
+
 def diff_response(resp_obj, expected_resp_json):
     diff_content = {}
     resp_info = parse_response_object(resp_obj)
@@ -30,3 +35,7 @@ def diff_json(current_json, expected_json):
                 'expected': expected_value
             }
     return json_diff
+
+
+def load_testcases(testcase_file_path):
+    return None
