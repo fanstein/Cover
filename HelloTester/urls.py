@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^logout/$', logout),
     url(r'^logout/$', logout),
     url(r'^dailywork/', include('dailywork.urls')),
+    url(r'^apiRunner/', include('ApiRunner.urls')),
     url(r'^$', RedirectView.as_view(url='dailywork')),
 ]
