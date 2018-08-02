@@ -1,0 +1,19 @@
+name: create user which does not exist
+variables:
+requests:
+  url: http://127.0.0.1:5000/api/users/1000
+  method: POST
+  headers:
+    Content-Type: application/json
+  json:
+    name: user1
+    password: 123456
+response:
+  status_code: 201
+  header:
+    Content-Type: application/json
+  body:
+    success: ture
+    msg: user created successfully.
+extractors:
+validators:

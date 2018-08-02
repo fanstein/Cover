@@ -1,6 +1,12 @@
 # coding:utf8
 import json
 
+import requests
+import yaml
+import os
+
+
+
 class ParamException(Exception):
     def __init__(self, parameter, para_value):
         err = 'The parameter "{0}" is not legal:{1}'.format(parameter, para_value)
@@ -48,7 +54,17 @@ def diff_json(current_json, expected_json):
 
 
 def load_testcases(testcase_file_path):
-    with open(testcase_file_path, 'r') as case:
-        case_str = case.read()
-    json_obj = json.loads(case_str)
-    return json_obj
+    suffix = os.path.splitext(testcase_file_path)[1]
+    if suffix == '.json':
+        with open(testcase_file_path, 'r') as case:
+            case_str = case.read()
+        json_obj = json.loads(case_str)
+        return json_obj
+    if suffix == '.yml':
+        with open(testcase_file_path, 'r') as case:
+            y_obj = yaml.load(case)
+        return y_obj
+
+
+def http_client(url, method, **req_kwargs):
+    return requests.request(url=url, method=method, **req_kwargs)
